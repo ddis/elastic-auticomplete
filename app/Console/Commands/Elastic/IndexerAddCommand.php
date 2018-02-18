@@ -55,9 +55,24 @@ class IndexerAddCommand extends Command
         Articles::where('display', 1)->chunk(200, function ($items) use ($indexer, $entity){
             $data = [];
             foreach ($items as $item) {
+
+                $title = explode(' ', $item->title);
+                $input = [];
+                foreach ($title as $k => $elem) {
+                    if (is_array($title)) {
+                        $input[] = implode(' ', $title);
+                    } else {
+                        $input[] = trim($title);
+                    }
+                    unset($title[$k]);
+                }
+
                 $data[$item->id] = [
                     'text' => $item->text,
-                    'title' => $item->title
+                    'title' => $item->title,
+                    'title_suggest' => [
+                        'input' => $input
+                    ],
                 ];
             }
             $indexer->insertBulk($data, $entity);

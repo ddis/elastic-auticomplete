@@ -22,13 +22,9 @@ trait WikiMapping
         $map = [
             'title' => [
                 'type' => 'text',
-                'fields' => [
-                    'edgengram' => [
-                        'type' => 'text',
-                        'analyzer' => 'edge_ngram_analyzer',
-                        'search_analyzer' => 'edge_ngram_search_analyzer',
-                    ]
-                ]
+            ],
+            'title_suggest' => [
+                'type' => 'completion',
             ],
             'text' => [
                 'type' => 'text',

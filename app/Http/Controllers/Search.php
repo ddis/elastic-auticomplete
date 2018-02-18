@@ -34,9 +34,12 @@ class Search extends Controller
             'type' => $type,
             'body' => [
                 '_source' => ['title', '_id'],
-                'query' => [
-                    'match' => [
-                        'title.edgengram' => $query
+                'suggest' => [
+                    'suggest' => [
+                        'prefix' => $query,
+                        'completion' => [
+                            'field' => 'title_suggest'
+                        ]
                     ]
                 ]
             ]
