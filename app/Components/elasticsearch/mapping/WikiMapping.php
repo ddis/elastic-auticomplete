@@ -22,13 +22,19 @@ trait WikiMapping
         $map = [
             'title' => [
                 'type' => 'text',
-            ],
-            'title_suggest' => [
-                'type' => 'completion',
+                'fields' => [
+                    'autocomplete' => [
+                        'type' => 'text',
+                        'analyzer' => 'autocomplete',
+                        'search_analyzer' => 'standard',
+                        'term_vector' => 'with_positions_offsets'
+                    ]
+                ]
             ],
             'text' => [
                 'type' => 'text',
                 'analyzer' => Analyzer::getAnalyzer('en')['analyzer'],
+
             ]
         ];
 

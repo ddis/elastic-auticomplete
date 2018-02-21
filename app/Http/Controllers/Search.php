@@ -20,8 +20,7 @@ class Search extends Controller
     }
 
     public function find(Request $request)
-    {
-        $query = $request->get('query');
+    {        $query = $request->get('query');
 
         $elastic = ElasticClient::getInstance()->getClient();
         $entity = ElasticClient::makeEntityInstance('wiki');
@@ -34,11 +33,18 @@ class Search extends Controller
             'type' => $type,
             'body' => [
                 '_source' => ['title', '_id'],
-                'suggest' => [
-                    'suggest' => [
-                        'prefix' => $query,
-                        'completion' => [
-                            'field' => 'title_suggest'
+                'size' => 10,
+                'query' => [
+                    'match' => [
+                        'title.autocomplete' => $query,
+                    ]
+                ],
+                'highlight' => [
+                    'pre_tags' => '<em style="color: #bf5329">',
+                    'post_tags' => '</em>',
+                    'fields' => [
+                        'title.autocomplete' => [
+                            'type' => 'fvh'
                         ]
                     ]
                 ]

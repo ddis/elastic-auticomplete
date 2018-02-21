@@ -8,8 +8,8 @@ $(function () {
             },
             success : function (response) {
                 $('.list-group').html('');
-                $.each(response.suggest.suggest[0].options, function (index, value) {
-                    $('.list-group').append('<a href="#" class="list-group-item list-group-item-action">'+value._source.title+'</a>');
+                $.each(response.hits.hits, function (index, value) {
+                    $('.list-group').append('<a href="#" class="list-group-item list-group-item-action">'+value.highlight['title.autocomplete'][0]+'</a>');
                 });
             }
         });

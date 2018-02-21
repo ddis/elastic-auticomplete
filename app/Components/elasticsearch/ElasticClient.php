@@ -27,11 +27,11 @@ final class ElasticClient
     private function __construct()
     {
         $config = [
-            'host' => 'localhost',
+            'host' => '192.168.53.72',
             'port' => '9200',
             'scheme' => 'http',
-            'user' => '',
-            'pass' => ''
+            'user' => 'elastic',
+            'pass' => 'kibana'
         ];
 
         $this->client = ClientBuilder::create()

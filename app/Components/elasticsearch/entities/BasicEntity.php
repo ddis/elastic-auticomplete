@@ -38,6 +38,33 @@ abstract class BasicEntity
         return [
             'index' => $index,
             'body'  => [
+                'settings' => [
+                    "analysis" => [
+                        'analyzer' => [
+                            'autocomplete' => [
+                                'type' => 'custom',
+                                'tokenizer' => 'standard',
+                                'filter' => [
+                                    'lowercase',
+                                    'shingle_filter',
+                                    'autocomplete_filter'
+                                ]
+                            ]
+                        ],
+                        'filter' => [
+                            'autocomplete_filter' => [
+                                'type' => 'edge_ngram',
+                                'min_gram' => 2,
+                                'max_gram' => 12,
+                            ],
+                            'shingle_filter' => [
+                                'type' => 'shingle',
+                                'min_shingle_size' => 2,
+                                'max_shingle_size' => 12,
+                            ]
+                        ]
+                    ],
+                ],
                 'mappings' => [
                     $type => [
                         'properties'        => $this->getProperties(),
